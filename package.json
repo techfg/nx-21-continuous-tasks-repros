@@ -51,6 +51,27 @@
         "options": {
           "command": "echo \"$(date) dev starting\" && while true; do sleep 5; echo \"$(date) dev ready for connections\"; done"
         }
+      },
+      "finish-when-ready": {
+          "executor": "nx:run-commands",
+          "options": {
+              "commands": [
+                  "sleep 5 && echo 'FINISHED'",
+                  "echo 'READY'"
+              ],
+              "readyWhen": "READY",
+              "parallel": true
+          }
+      },      
+      "finish-when-ready-single": {
+          "executor": "nx:run-commands",
+          "options": {
+              "commands": [
+                  "echo 'READY' && sleep 5 && echo 'FINISHED'"
+              ],
+              "readyWhen": "READY",
+              "parallel": true
+          }
       }
     }
   }
