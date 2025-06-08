@@ -72,6 +72,43 @@
               "readyWhen": "READY",
               "parallel": true
           }
+      },      
+      "waitForDevReadyWhen": {
+        "executor": "nx:run-commands",
+        "dependsOn": ["devReadyWhen"],
+        "options": {
+          "command": "echo \"$(date) waitForDev task starting\" && sleep 5 && echo \"$(date) waitForDev task done\""
+        }
+      },
+      "devReadyWhen": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "echo \"$(date) READY1\"",
+            "echo \"$(date) devReadyWhen starting loop\" && while true; do sleep 15; echo \"$(date) devReadyWhen ready for connections\" && echo \"$(date) READY2\"; done"
+          ],
+          "readyWhen": ["READY1", "READY2"],
+          "parallel": true
+        }
+      },
+      "waitForDevReadyWhenContinuous": {
+        "executor": "nx:run-commands",
+        "dependsOn": ["devReadyWhenContinuous"],
+        "options": {
+          "command": "echo \"$(date) waitForDevReadyWhenContinuous task starting\" && sleep 5 && echo \"$(date) waitForDevReadyWhenContinuous task done\""
+        }
+      },
+      "devReadyWhenContinuous": {
+        "executor": "nx:run-commands",
+        "continuous": true,
+        "options": {
+          "commands": [
+            "echo \"$(date) READY1\"",
+            "echo \"$(date) devReadyWhenContinuous starting loop\" && while true; do sleep 10; echo \"$(date) devReadyWhenContinuous ready for connections\" && echo \"$(date) READY2\"; done"
+          ],
+          "readyWhen": ["READY1", "READY2"],
+          "parallel": true
+        }
       }
     }
   }
