@@ -16,5 +16,42 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "nx": {
+    "targets": {
+      "first": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "echo \"$(date) first task starting\" && sleep 5 && echo \"$(date) first task done\""
+        }
+      },
+      "second": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "echo \"$(date) second task starting\" && sleep 5 && echo \"$(date) second task done\""
+        }
+      },
+      "third": {
+        "executor": "nx:run-commands",
+        "dependsOn": ["dev"],
+        "options": {
+          "command": "echo \"$(date) third task starting\" && sleep 5 && echo \"$(date) third task done\""
+        }
+      },
+      "fourth": {
+        "executor": "nx:run-commands",
+        "dependsOn": ["dev"],
+        "options": {
+          "command": "echo \"$(date) fourth task starting\" && sleep 5 && echo \"$(date) fourth task done\""
+        }
+      },
+      "dev": {
+        "executor": "nx:run-commands",
+        "continuous": true,
+        "options": {
+          "command": "echo \"$(date) dev starting\" && while true; do sleep 5; echo \"$(date) dev ready for connections\"; done"
+        }
+      }
+    }
+  }
 }
