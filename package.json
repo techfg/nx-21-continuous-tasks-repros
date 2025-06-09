@@ -109,6 +109,48 @@
           "readyWhen": ["READY1", "READY2"],
           "parallel": true
         }
+      },
+      "parent-script": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "bash ./parentscript.sh",
+          "cwd": "{workspaceRoot}"
+        }
+      },
+      "parent-inline-command": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "bash ./parentinlinecommand.sh",
+          "cwd": "{workspaceRoot}"
+        }
+      },  
+      "parent-run-child-script-target-direct": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "nx run child-script",
+          "cwd": "{workspaceRoot}"
+        }
+      },
+      "parent-run-child-inline-command-target-direct": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "nx run child-inline-command",
+          "cwd": "{workspaceRoot}"
+        }
+      },      
+      "child-script": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "bash ./childscript.sh",
+          "cwd": "{workspaceRoot}"
+        }
+      },
+      "child-inline-command": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "i=1; start=$(date +%s); while [ $(date +%s) -lt $((start + 5)) ]; do echo \"Iteration $i: $(date)\"; i=$((i + 1)); done",
+          "cwd": "{workspaceRoot}"
+        }
       }
     }
   }
